@@ -1,0 +1,30 @@
+<h1>Submit a Bill</h1>
+
+<div class="card" style="max-width: 480px;">
+  <% if flash[:alert] %>
+    <div class="flash flash-alert"><%= flash[:alert] %></div>
+  <% end %>
+
+  <%= form_with model: @bill, url: bills_path, local: true do |f| %>
+    <div class="form-field">
+      <%= f.label :amount, "Amount", class: "form-label" %>
+      <%= f.number_field :amount, step: "0.01", class: "form-input" %>
+    </div>
+
+    <div class="form-field">
+      <%= f.label :bill_type, "Bill Type", class: "form-label" %>
+      <%= f.select :bill_type,
+                   ["Food", "Travel", "Others"],
+                   { prompt: "Select type" },
+                   class: "form-input" %>
+    </div>
+
+    <div class="form-actions">
+      <%= f.submit "Submit Bill", class: "btn-primary" %>
+      <%= link_to "Back to My Bills",
+                  bills_path,
+                  class: "form-link",
+                  style: "margin-left: 10px;" %>
+    </div>
+  <% end %>
+</div>

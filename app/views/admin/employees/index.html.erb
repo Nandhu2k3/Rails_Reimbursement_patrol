@@ -1,0 +1,35 @@
+<h1>Employees</h1>
+
+<p>
+  <%= link_to "New Employee", new_admin_employee_path, class: "btn-primary" %>
+</p>
+
+<table class="stack-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Department</th>
+      <th>Designation</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @employees.each do |e| %>
+      <tr>
+        <td data-label="Name"><%= "#{e.first_name} #{e.last_name}" %></td>
+        <td data-label="Email"><%= e.email %></td>
+        <td data-label="Department"><%= e.department&.name || "-" %></td>
+        <td data-label="Designation"><%= e.designation || "-" %></td>
+        <td data-label="Actions">
+          <%= link_to "Show", admin_employee_path(e) %> |
+          <%= link_to "Edit", edit_admin_employee_path(e) %> |
+          <%= link_to "Delete", admin_employee_path(e),
+                      method: :delete,
+                      data: { confirm: "Are you sure?" } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

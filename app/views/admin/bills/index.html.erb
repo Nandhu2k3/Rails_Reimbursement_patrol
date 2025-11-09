@@ -1,0 +1,53 @@
+<h1>All Bills</h1>
+
+<div class="summary-tiles">
+  <div class="summary-tile">
+    <p class="summary-label">Total submitted</p>
+    <p class="summary-value">
+      <%= number_to_currency(@total_submitted_amount) %>
+    </p>
+  </div>
+  <div class="summary-tile">
+    <p class="summary-label">Total approved</p>
+    <p class="summary-value">
+      <%= number_to_currency(@total_approved_amount) %>
+    </p>
+  </div>
+</div>
+
+<% if @bills.empty? %>
+  <p>No bills yet.</p>
+<% else %>
+  <table class="stack-table">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Amount</th>
+        <th>Date of submission</th>
+        <th>Submitted by</th>
+        <th>Department</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @bills.each do |bill| %>
+        <tr>
+          <td data-label="Type"><%= bill.bill_type %></td>
+          <td data-label="Amount"><%= bill.amount %></td>
+          <td data-label="Date of submission"><%= bill.submitted_at&.to_date || "-" %></td>
+          <td data-label="Submitted by"><%= "#{bill.employee.first_name} #{bill.employee.last_name}" %></td>
+          <td data-label="Department"><%= bill.employee&.department&.name || "-" %></td>
+          <td data-label="Status"><%= bill.status %></td>
+          <td data-label="Actions">
+            <%= link_to "View", admin_bill_path(bill) %>
+            <% if bill.pending? %>
+              | <%= link_to "Approve", approve_admin_bill_path(bill), method: :patch %>
+              | <%= link_to "Reject", reject_admin_bill_path(bill), method: :patch %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

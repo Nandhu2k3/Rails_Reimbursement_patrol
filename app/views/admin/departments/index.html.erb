@@ -1,0 +1,37 @@
+<h1>Departments</h1>
+
+<p>
+  <%= link_to "New Department", new_admin_department_path %> |
+  <%= link_to "Back to Dashboard", admin_dashboard_path %>
+</p>
+
+<% if flash[:notice] %>
+  <p style="color: green;"><%= flash[:notice] %></p>
+<% end %>
+
+<% if flash[:alert] %>
+  <p style="color: red;"><%= flash[:alert] %></p>
+<% end %>
+
+<table border="1" cellpadding="4">
+  <tr>
+    <th>Name</th>
+    <th>Actions</th>
+  </tr>
+
+  <% @departments.each do |d| %>
+    <tr>
+      <td><%= d.name %></td>
+      <td>
+        <%= link_to "Edit", edit_admin_department_path(d) %> |
+        <%= link_to "Delete", admin_department_path(d),
+                    method: :delete,
+                    data: { confirm: "Delete this department?" } %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<% if @departments.empty? %>
+  <p>No departments created yet.</p>
+<% end %>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Reimbursement Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+  </head>
+
+  <body class="app-body">
+    <!-- Top bar -->
+    <header class="app-header">
+      <div class="app-header-left">
+        <!-- Logo / Title -->
+        <span class="app-logo">💸 ReimburseMe</span>
+      </div>
+
+      <div class="app-header-right">
+        <% if logged_in? %>
+          <!-- Current user + role -->
+          <span class="user-label">
+            👋 <%= current_user.name %>
+            <% if current_user.admin? %>
+              <span class="role-pill">Admin</span>
+            <% else %>
+              <span class="role-pill employee">Employee</span>
+            <% end %>
+          </span>
+
+          <!-- Logout trigger button (opens modal) -->
+          <button type="button"
+                  class="logout-link"
+                  id="open-logout-confirm">
+            ⏏ Logout
+          </button>
+
+          <!-- Hidden form that performs the actual logout (non-remote) -->
+          <%= form_with url: logout_path,
+                        method: :delete,
+                        local: true,
+                        id: "logout-form",
+                        style: "display:none;" do %>
+          <% end %>
+
+          <!-- Custom logout confirmation modal -->
+          <div id="logout-modal" class="modal-overlay hidden">
+            <div class="modal">
+              <h2 class="modal-title">Log out</h2>
+              <p class="modal-text">
+                Are you sure you want to log out from the portal?
+              </p>
+              <div class="modal-actions">
+                <button type="button"
+                        id="logout-cancel"
+                        class="btn-secondary">
+                  Cancel
+                </button>
+                <button type="button"
+                        id="logout-confirm"
+                        class="btn-primary">
+                  Log out
+                </button>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </header>
+
+    <div class="app-main">
+      <!-- Sidebar -->
+      <nav class="app-sidebar">
+        <% if logged_in? %>
+          <% if current_user.admin? %>
+            <div class="sidebar-section-label">Admin</div>
+            <%= link_to "🏠 Dashboard", admin_dashboard_path, class: "sidebar-link" %>
+            <%= link_to "👥 Employees", admin_employees_path, class: "sidebar-link" %>
+            <%= link_to "🏢 Departments", admin_departments_path, class: "sidebar-link" %>
+            <%= link_to "📄 All Bills", admin_bills_path, class: "sidebar-link" %>
+          <% else %>
+            <div class="sidebar-section-label">Employee</div>
+            <%= link_to "📄 My Bills", bills_path, class: "sidebar-link" %>
+            <%= link_to "➕ Submit Bill", new_bill_path, class: "sidebar-link" %>
+          <% end %>
+        <% else %>
+          <div class="sidebar-section-label">Welcome</div>
+          <%= link_to "🔐 Login", login_path, class: "sidebar-link" %>
+          <%= link_to "📝 Sign Up", signup_path, class: "sidebar-link" %>
+        <% end %>
+      </nav>
+
+      <!-- Page content -->
+      <main class="app-content">
+        <% if flash[:notice] %>
+          <div class="flash flash-notice"><%= flash[:notice] %></div>
+        <% end %>
+
+        <% if flash[:alert] %>
+          <div class="flash flash-alert"><%= flash[:alert] %></div>
+        <% end %>
+
+        <%= yield %>
+      </main>
+    </div>
+  </body>
+</html>

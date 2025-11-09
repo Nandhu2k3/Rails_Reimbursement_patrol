@@ -1,0 +1,45 @@
+<h1>My Bills</h1>
+
+<div class="summary-tiles">
+  <div class="summary-tile">
+    <p class="summary-label">Total submitted</p>
+    <p class="summary-value">
+      <%= number_to_currency(@total_submitted_amount) %>
+    </p>
+  </div>
+  <div class="summary-tile">
+    <p class="summary-label">Total approved</p>
+    <p class="summary-value">
+      <%= number_to_currency(@total_approved_amount) %>
+    </p>
+  </div>
+</div>
+
+<p>
+  <%= link_to "Submit New Bill", new_bill_path, class: "btn-primary" %>
+</p>
+
+<% if @bills.empty? %>
+  <p>No bills submitted yet.</p>
+<% else %>
+  <table class="stack-table">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Amount</th>
+        <th>Date of submission</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @bills.each do |bill| %>
+        <tr>
+          <td data-label="Type"><%= bill.bill_type %></td>
+          <td data-label="Amount"><%= bill.amount %></td>
+          <td data-label="Date of submission"><%= bill.submitted_at&.to_date || "-" %></td>
+          <td data-label="Status"><%= bill.status %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

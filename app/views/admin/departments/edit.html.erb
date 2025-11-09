@@ -1,0 +1,20 @@
+<h1>Edit Department</h1>
+
+<% if flash[:alert] %>
+  <p style="color:red;"><%= flash[:alert] %></p>
+<% end %>
+
+<%= form_with model: @department, url: admin_department_path(@department), method: :patch, local: true do |f| %>
+  <div>
+    <%= f.label :name, "Department Name" %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div>
+    <%= f.submit "Update Department" %>
+  </div>
+<% end %>
+
+<p>
+  <%= link_to "Back", admin_departments_path %>
+</p>

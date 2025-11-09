@@ -1,0 +1,20 @@
+<h1>Admin Dashboard</h1>
+
+<p>Welcome, <%= current_user.name %>!</p>
+
+<p>
+  Company: <strong><%= current_company.name %></strong>
+</p>
+
+<p>
+  Total employees: <%= @employees_count %><br>
+  Total bills: <%= @bills_count %><br>
+  Pending bills: <%= @pending_bills_count %>
+</p>
+
+<p>
+  <%= link_to "Manage Departments", admin_departments_path %> |
+  <%= link_to "Manage Employees", admin_employees_path %> |
+  <%= link_to "View Bills", admin_bills_path %> |
+  <%= link_to "Logout", logout_path, method: :delete %>
+</p>

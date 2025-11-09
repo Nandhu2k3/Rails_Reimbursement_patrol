@@ -1,0 +1,12 @@
+<h1>Bill Details</h1>
+
+<p><strong>Employee:</strong> <%= "#{@bill.employee.first_name} #{@bill.employee.last_name}" %></p>
+<p><strong>Amount:</strong> <%= @bill.amount %></p>
+<p><strong>Type:</strong> <%= @bill.bill_type %></p>
+<p><strong>Status:</strong> <%= @bill.status %></p>
+<p><strong>Submitted At:</strong> <%= @bill.submitted_at %></p>
+<p><strong>Reviewed At:</strong> <%= @bill.reviewed_at || "-" %></p>
+
+<p>
+  <%= link_to "Back to Bills", admin_bills_path %>
+</p>

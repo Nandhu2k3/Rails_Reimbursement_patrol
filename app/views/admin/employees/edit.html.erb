@@ -1,0 +1,51 @@
+<h1>Edit Employee</h1>
+
+<% if flash[:alert] %>
+  <p style="color:red;"><%= flash[:alert] %></p>
+<% end %>
+
+<%= form_with model: @employee,
+              url: admin_employee_path(@employee),
+              method: :patch,
+              local: true do |f| %>
+
+  <div>
+    <%= f.label :first_name, "First Name" %>
+    <%= f.text_field :first_name %>
+  </div>
+
+  <div>
+    <%= f.label :last_name, "Last Name" %>
+    <%= f.text_field :last_name %>
+  </div>
+
+  <div>
+    <%= f.label :email, "Work Email" %>
+    <%= f.email_field :email %>
+  </div>
+
+  <div>
+    <%= f.label :designation, "Designation" %>
+    <%= f.text_field :designation %>
+  </div>
+
+  <div>
+    <%= f.label :department_id, "Department" %>
+    <%= f.select :department_id,
+                 @departments.map { |d| [d.name, d.id] },
+                 prompt: "Select department" %>
+  </div>
+
+  <div>
+    <%= f.label :user_id, "Linked User ID (optional)" %>
+    <%= f.number_field :user_id %>
+  </div>
+
+  <div>
+    <%= f.submit "Update Employee" %>
+  </div>
+<% end %>
+
+<p>
+  <%= link_to "Back to Employees", admin_employees_path %>
+</p>

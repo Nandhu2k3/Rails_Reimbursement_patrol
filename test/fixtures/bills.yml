@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  amount: 
+  amount: 
+  bill_type: MyString
+  status: MyString
+  submitted_at: 2025-11-08 21:08:37
+  reviewed_at: 2025-11-08 21:08:37
+  company: one
+  employee: one
+  reviewed_by_user_id: 1
+
+two:
+  amount: 
+  amount: 
+  bill_type: MyString
+  status: MyString
+  submitted_at: 2025-11-08 21:08:37
+  reviewed_at: 2025-11-08 21:08:37
+  company: two
+  employee: two
+  reviewed_by_user_id: 1
