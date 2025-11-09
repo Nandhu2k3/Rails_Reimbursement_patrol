@@ -10,11 +10,13 @@ RUN apt-get update -y && \
       build-essential \
       git \
       curl \
+      ca-certificates \
       libssl-dev \
       libreadline-dev \
       zlib1g-dev \
       libpq-dev \
       nodejs && \
+    update-ca-certificates && \
     rm -rf /var/lib/apt/lists/*
 
 # Install rbenv + ruby-build so we can compile Ruby 2.5.3
@@ -37,7 +39,7 @@ ENV PATH="${RBENV_ROOT}/shims:${RBENV_ROOT}/bin:${PATH}"
 # App directory
 WORKDIR /app
 
-# Install gems first (leveraging Docker layer cache)
+# Install gems (production only)
 COPY Gemfile Gemfile.lock ./
 RUN bundle install --without development test
 
@@ -51,7 +53,7 @@ ENV RACK_ENV=production
 # Precompile assets
 RUN bundle exec rake assets:precompile
 
-# Puma listens on 3000; Render maps $PORT, and puma.rb reads it
+# Puma listens on 3000; Render maps $PORT and puma.rb reads it
 EXPOSE 3000
 
 # Start Puma with your existing config
